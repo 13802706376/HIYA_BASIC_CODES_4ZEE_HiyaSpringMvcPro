@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+ 
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="HiyaConsole"/>
+       <!--  <appender-ref ref="HiyaDailyRollingInfoFile"/> -->
+		<!--  <appender-ref ref="HiyaDailyRollingErrorFile"/>     -->
+		<appender-ref ref="HiyaRollingFile"/>  
+    </root>
+    
+    
+    <appender name="HiyaConsole" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="[HiyaSystem] %-d{yyyy-MM-dd HH:mm:ss} %p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>  
+    
+    <appender name="HiyaDailyRollingInfoFile" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="encoding" value="UTF-8" />
+	    <param name="File" value="F://hiyaLog/dailyRollingInfo/application-hiya-info.log" />
+	    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+	    <param name="Append" value="true" />
+	    <param name="Threshold"  value="INFO"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	      <param name="ConversionPattern" value="[HiyaSystem] %-d{yyyy-MM-dd HH:mm:ss} %-5p %-15c{1}: %m%n"/>
+	    </layout>
+     </appender>
+     
+     <appender name="HiyaDailyRollingErrorFile" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="encoding" value="UTF-8" />
+	    <param name="File" value="F://hiyaLog/dailyRollingError/application-hiya-error.log" />
+	    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+	    <param name="Append" value="true" />
+	    <param name="Threshold"  value="ERROR"/>
+	    <layout class="org.apache.log4j.PatternLayout">
+	      <param name="ConversionPattern" value="[HiyaSystem] %-d{yyyy-MM-dd HH:mm:ss} %-5p %-15c{1}: %m%n"/>
+	    </layout>
+     </appender>
+     
+     <appender name="HiyaRollingFile" class="org.apache.log4j.RollingFileAppender">
+    	<param name="encoding" value="UTF-8" />
+	    <param name="File" value="F://hiyaLog/rollingSize/application-hiya-info.log" />
+	    <param name="MaxFileSize" value="3KB" />
+	    <param name="Append" value="true" />
+	    <rollingPolicy    class="org.apache.log4j.rolling.TimeBasedRollingPolicy">  
+               <param name="FileNamePattern"   value="F://hiyaLog/rollingSize/application-hiya-info %d{yyyy-MM-dd HH:MI:SS}" />  
+         </rollingPolicy>  
+	    <layout class="org.apache.log4j.PatternLayout">
+	      <param name="ConversionPattern" value="[HiyaSystem] %-d{yyyy-MM-dd HH:mm:ss} %-5p %-15c{1}: %m%n"/>
+	    </layout>
+     </appender>
+</log4j:configuration>
+
+
+
+
+
+<!-- 
+############################配置  rootLogger 属性  start############################
+#FATAL       0  
+#ERROR       3  
+#WARN        4  
+#INFO         6  
+#DEBUG       7
+log4j.rootLogger=INFO, HiyaConsole, HiyaDailyRollingInfoFile,HiyaDailyRollingErrorFile,HiyaRollingFile
+############################配置  rootLogger 属性  end ############################
+
+
+
+############################配置 log4j.appender属性  start############################
+#控制台的配置
+log4j.appender.HiyaConsole=org.apache.log4j.ConsoleAppender
+log4j.appender.HiyaConsole.Target=System.out
+log4j.appender.HiyaConsole.layout=org.apache.log4j.PatternLayout 
+log4j.appender.HiyaConsole.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n 
+
+#每天一个文件的配置，输出INFO级别的
+log4j.appender.HiyaDailyRollingInfoFile = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.HiyaDailyRollingInfoFile.File = F://hiyaLog/dailyRollingInfo/application-hiya-info.log
+log4j.appender.HiyaDailyRollingInfoFile.Append = true
+log4j.appender.HiyaDailyRollingInfoFile.Threshold = INFO
+log4j.appender.HiyaDailyRollingInfoFile.layout = org.apache.log4j.PatternLayout
+log4j.appender.HiyaDailyRollingInfoFile.layout.ConversionPattern = %-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n
+
+
+### 每天一个文件的配置，保存异常信息到单独文件 ###
+log4j.appender.HiyaDailyRollingErrorFile = org.apache.log4j.DailyRollingFileAppender
+log4j.appender.HiyaDailyRollingErrorFile.File =F://hiyaLog/dailyRollingError/application-hiya-error.log
+log4j.appender.HiyaDailyRollingErrorFile.Append = true
+log4j.appender.HiyaDailyRollingErrorFile.Threshold = ERROR
+log4j.appender.HiyaDailyRollingErrorFile.layout = org.apache.log4j.PatternLayout
+log4j.appender.HiyaDailyRollingErrorFile.layout.ConversionPattern = %-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n
+
+
+#文件大小到达指定尺寸的时候产生一个新的文件
+log4j.appender.HiyaRollingFile=org.apache.log4j.RollingFileAppender 
+log4j.appender.HiyaRollingFile.Threshold=INFO 
+log4j.appender.HiyaRollingFile.File=F://hiyaLog/rollingSize/application-hiya-info.log
+log4j.appender.HiyaRollingFile.Append=true 
+log4j.appender.HiyaRollingFile.MaxFileSize=10KB 
+log4j.appender.HiyaRollingFile.MaxBackupIndex=1 
+log4j.appender.HiyaRollingFile.layout=org.apache.log4j.PatternLayout 
+log4j.appender.HiyaRollingFile.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n
+
+
+
+
+#将日志信息以流格式发送到任意指定的地方
+#log4j.appender.HiyaConsole=org.apache.log4j.WriterAppender
+############################配置 log4j.appender属性  end############################
+
+
+
+
+
+
+
+############################打印参数说明  start############################
+#　     %m   输出代码中指定的消息
+#　　%p   输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
+#　　%r   输出自应用启动到输出该log信息耗费的毫秒数 
+#　　%c   输出所属的类目，通常就是所在类的全名 
+#　　%t   输出产生该日志事件的线程名 
+#　　%n   输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n” 
+#　　%d   输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss , SSS}，输出类似：2002年10月18日  22 ： 10 ： 28 ， 921  
+#　　%l   输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java: 10 ) 
+
+############################打印参数说明  end############################
+ -->

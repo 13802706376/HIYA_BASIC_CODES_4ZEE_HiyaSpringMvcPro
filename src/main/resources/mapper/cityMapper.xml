@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.hiya.mapper.CityMapper">  
+    <resultMap id="baseResultMap" type="com.hiya.domain.CityEntity">  
+        <id column="ID" property="id" jdbcType="CHAR" />  
+        <result column="NAME" property="name" jdbcType="CHAR" />  
+        <result column="PRIVINCE_ID" property="provinceId" jdbcType="CHAR" />  
+        <result column="GOVAREA" property="govArea" jdbcType="CHAR" />  
+        <result column="ACREAGE" property="acreage" jdbcType="CHAR" />  
+        <result column="GDP" property="gdp" jdbcType="CHAR" />  
+        <result column="CREATED_BY" property="createdBy" jdbcType="CHAR" />  
+        <result column="LAST_UPDATE_BY" property="lastUpdateBy" jdbcType="CHAR" />  
+        <result column="CREATED_DATE" property="createdDate" jdbcType="DATE" />  
+        <result column="LAST_UPDATE_DATE" property="lastUpdateDate" jdbcType="DATE" />  
+    </resultMap>  
+    
+    <select id="getById" parameterType="java.util.Map" resultMap="baseResultMap">  
+        SELECT * FROM t_city WHERE id = #{cityId}  
+    </select>  
+    
+</mapper> 
